@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { Facebook, X, Instagram, Linkedin, CheckCircle } from 'lucide-react';
 
 const Contact = () => {
@@ -11,7 +11,7 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:8080/api/v1/camp-requests', {
+      await api.post('/camp-requests', {
         orgName: formData.orgName,
         email: formData.email,
         message: formData.message,
@@ -61,16 +61,16 @@ const Contact = () => {
           Join our growing community online. Stay updated on our latest drives, health tips, and ways you can help save lives!
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-          <a href="#" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
+          <a href="https://www.facebook.com/Apheresis2026" target="_blank" rel="noopener noreferrer" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
             <Facebook size={26} /> Facebook
           </a>
-          <a href="#" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
+          <a href="https://x.com/Apheresis2026" target="_blank" rel="noopener noreferrer" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
             <X size={26} /> X (Twitter)
           </a>
-          <a href="#" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
+          <a href="https://www.instagram.com/apheresis2026/" target="_blank" rel="noopener noreferrer" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
             <Instagram size={26} /> Instagram
           </a>
-          <a href="#" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" style={socialBtnStyle} onMouseOver={hoverEffect} onMouseOut={resetEffect}>
             <Linkedin size={26} /> LinkedIn
           </a>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import GoogleMapComponent from '../../components/maps/GoogleMapComponent';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,9 +17,7 @@ const UserDashboard = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const res = await api.get('/user/me');
       setProfile(res.data);
     } catch (e) {
       console.error('Error fetching profile', e);
@@ -28,9 +26,7 @@ const UserDashboard = () => {
 
   const fetchDonations = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/user/donations', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const res = await api.get('/user/donations');
       setDonations(res.data);
     } catch (e) {
       console.error(e);
@@ -39,9 +35,7 @@ const UserDashboard = () => {
 
   const fetchMyRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/requests/my-requests', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const res = await api.get('/requests/my-requests');
       setMyRequests(res.data);
     } catch (e) {
       console.error(e);
@@ -50,8 +44,7 @@ const UserDashboard = () => {
 
   const downloadCertificate = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/v1/user/donations/${id}/certificate`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      const res = await api.get(`/user/donations/${id}/certificate`, {
         responseType: 'blob'
       });
       

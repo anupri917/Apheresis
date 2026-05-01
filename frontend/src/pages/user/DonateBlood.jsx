@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const DonateBlood = () => {
@@ -32,13 +32,11 @@ const DonateBlood = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/v1/user/donate', {
+      await api.post('/user/donate', {
         bloodGroup: formData.bloodGroup,
         bloodComponentType: formData.bloodComponentType,
         units: formData.units,
         quantityMl: formData.units * 350
-      }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       alert('Thank you for your donation! Your next eligible date has been calculated.');
       navigate('/user');

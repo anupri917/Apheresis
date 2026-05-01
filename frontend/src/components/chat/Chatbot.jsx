@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { MessageCircle, X, Send, Droplet } from 'lucide-react';
 
 const QUICK_REPLIES = [
@@ -34,13 +34,14 @@ const Chatbot = () => {
 
     try {
       // Call backend which now uses Gemini API
-      const response = await axios.post('http://localhost:8080/api/v1/chatbot/ask', { query });
+      const response = await api.post('/chatbot/ask', { query });
       
       setMessages(prev => [...prev, { text: response.data.answer, isBot: true }]);
     } catch (error) {
       console.error('Chatbot error:', error);
+      const baseUrl = api.defaults.baseURL || 'unknown';
       setMessages(prev => [...prev, { 
-        text: "⚠️ I'm having trouble connecting to my AI brain. Please make sure the backend is running and the Gemini API key is configured.", 
+        text: `⚠️ I'm having trouble connecting to my AI brain.\n\n**Debug Info:**\n- Connection to: \`${baseUrl}\` failed.\n- Check if backend is running.\n- Ensure \`.env\` has a valid Gemini key.`, 
         isBot: true 
       }]);
     } finally {
@@ -48,10 +49,24 @@ const Chatbot = () => {
     }
   };
 
-  const formatText = (text) =>
-    text.split('\n').map((line, i) => (
-      <span key={i}>{line}<br /></span>
-    ));
+  const formatText = (text) => {
+    if (!text) return null;
+    return text.split('\n').map((line, i) => {
+      // Basic bold support: **text** -> <strong>text</strong>
+      const parts = line.split(/(\*\*.*?\*\*)/g);
+      return (
+        <span key={i}>
+          {parts.map((part, j) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              return <strong key={j}>{part.slice(2, -2)}</strong>;
+            }
+            return part;
+          })}
+          <br />
+        </span>
+      );
+    });
+  };
 
   return (
     <>

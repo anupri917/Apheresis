@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
 
@@ -12,13 +12,10 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/login', { username, password });
+      const response = await api.post('/auth/login', { username, password });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.role);
       localStorage.setItem('username', response.data.username);
-      
-      // Setup axios default auth header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       
       if (response.data.role === 'ROLE_ADMIN') navigate('/admin');
       else if (response.data.role === 'ROLE_WORKER') navigate('/worker');

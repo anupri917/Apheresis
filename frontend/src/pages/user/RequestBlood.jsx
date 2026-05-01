@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const RequestBlood = () => {
@@ -19,9 +19,7 @@ const RequestBlood = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/v1/requests', formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.post('/requests', formData);
       alert('Request submitted successfully! We will process it shortly.');
       navigate('/user');
     } catch (e) {

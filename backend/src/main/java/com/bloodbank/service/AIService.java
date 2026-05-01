@@ -15,7 +15,7 @@ public class AIService {
     private String geminiApiKey;
 
     private static final String GEMINI_URL =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
 
     private static final String SYSTEM_PROMPT =
         "You are Apheresis AI, a friendly and knowledgeable assistant for the Apheresis Blood Bank Management System. " +
@@ -59,15 +59,24 @@ public class AIService {
             if (response.getBody() != null) {
                 List<Map<String, Object>> candidates =
                     (List<Map<String, Object>>) response.getBody().get("candidates");
+                
                 if (candidates != null && !candidates.isEmpty()) {
-                    Map<String, Object> content = (Map<String, Object>) candidates.get(0).get("content");
-                    List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
-                    if (parts != null && !parts.isEmpty()) {
-                        return (String) parts.get(0).get("text");
+                    Map<String, Object> candidate = candidates.get(0);
+                    
+                    // Check if content exists (might be missing if blocked by safety filters)
+                    if (candidate.containsKey("content")) {
+                        Map<String, Object> content = (Map<String, Object>) candidate.get("content");
+                        List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
+                        if (parts != null && !parts.isEmpty()) {
+                            return (String) parts.get(0).get("text");
+                        }
+                    } else if (candidate.containsKey("finishReason")) {
+                        String reason = (String) candidate.get("finishReason");
+                        return "⚠️ Response blocked by AI safety filters. Reason: " + reason;
                     }
                 }
             }
-            return "I couldn't generate a response. Please try again.";
+            return "I couldn't generate a response. The AI brain might be resting. Please try again.";
 
         } catch (org.springframework.web.client.HttpClientErrorException e) {
             if (e.getStatusCode().value() == 400) {

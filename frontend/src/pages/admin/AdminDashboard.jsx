@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const ROLE_COLORS = {
@@ -29,12 +29,11 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setRefreshing(true);
     try {
-      const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
       const [invRes, reqRes, usersRes, campRes] = await Promise.all([
-        axios.get('http://localhost:8080/api/v1/inventory', { headers }),
-        axios.get('http://localhost:8080/api/v1/requests', { headers }),
-        axios.get('http://localhost:8080/api/v1/user/all', { headers }),
-        axios.get('http://localhost:8080/api/v1/camp-requests', { headers }),
+        api.get('/inventory'),
+        api.get('/requests'),
+        api.get('/user/all'),
+        api.get('/camp-requests'),
       ]);
 
       setInventory(invRes.data);
@@ -59,9 +58,7 @@ const AdminDashboard = () => {
 
   const handleCampStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:8080/api/v1/camp-requests/${id}/status?status=${status}`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.put(`/camp-requests/${id}/status?status=${status}`, {});
       setCampRequests(prev => prev.map(r => r.id === id ? { ...r, status } : r));
     } catch (e) { console.error(e); }
   };
@@ -69,9 +66,7 @@ const AdminDashboard = () => {
   const handleCampDelete = async (id) => {
     if (!window.confirm('Delete this camp request?')) return;
     try {
-      await axios.delete(`http://localhost:8080/api/v1/camp-requests/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.delete(`/camp-requests/${id}`);
       setCampRequests(prev => prev.filter(r => r.id !== id));
     } catch (e) { console.error(e); }
   };
@@ -79,9 +74,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm('Are you sure you want to delete this account?')) return;
     try {
-      await axios.delete(`http://localhost:8080/api/v1/user/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.delete(`/user/${id}`);
       setUsers(prev => prev.filter(u => u.id !== id));
     } catch (e) {
       alert(e.response?.data || 'Failed to delete user');

@@ -1,10 +1,8 @@
 package com.bloodbank.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
@@ -12,12 +10,14 @@ import java.util.Base64;
 public class EncryptionUtil {
 
     private static final String ALGORITHM = "AES";
-    private static final byte[] KEY = "MySuperSecretKeyMySuperSecretKey".getBytes(); // 32 bytes for AES-256
+
+    @Value("${encryption.key}")
+    private String encryptionKey;
 
     public String encrypt(String value) {
         if (value == null) return null;
         try {
-            SecretKeySpec secretKey = new SecretKeySpec(KEY, ALGORITHM);
+            SecretKeySpec secretKey = new SecretKeySpec(encryptionKey.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] encryptedValue = cipher.doFinal(value.getBytes());
@@ -30,7 +30,7 @@ public class EncryptionUtil {
     public String decrypt(String encryptedValue) {
         if (encryptedValue == null) return null;
         try {
-            SecretKeySpec secretKey = new SecretKeySpec(KEY, ALGORITHM);
+            SecretKeySpec secretKey = new SecretKeySpec(encryptionKey.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             byte[] decryptedValue = cipher.doFinal(Base64.getDecoder().decode(encryptedValue));

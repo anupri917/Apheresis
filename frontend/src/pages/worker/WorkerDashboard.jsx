@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 const WorkerDashboard = () => {
   const [inventory, setInventory] = useState([]);
@@ -14,9 +14,7 @@ const WorkerDashboard = () => {
 
   const fetchInventory = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/inventory', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const res = await api.get('/inventory');
       setInventory(res.data);
     } catch (e) {
       console.error(e);
@@ -25,9 +23,7 @@ const WorkerDashboard = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/requests', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const res = await api.get('/requests');
       setRequests(res.data);
     } catch (e) {
       console.error(e);
@@ -36,9 +32,7 @@ const WorkerDashboard = () => {
 
   const approveRequest = async (id) => {
     try {
-      await axios.put(`http://localhost:8080/api/v1/requests/${id}/status?status=FULFILLED`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.put(`/requests/${id}/status?status=FULFILLED`, {});
       fetchRequests();
     } catch (e) {
       console.error(e);
@@ -47,9 +41,7 @@ const WorkerDashboard = () => {
 
   const rejectRequest = async (id) => {
     try {
-      await axios.put(`http://localhost:8080/api/v1/requests/${id}/status?status=REJECTED`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.put(`/requests/${id}/status?status=REJECTED`, {});
       fetchRequests();
     } catch (e) {
       console.error(e);
@@ -58,9 +50,7 @@ const WorkerDashboard = () => {
 
   const cleanupExpired = async () => {
     try {
-      await axios.post('http://localhost:8080/api/v1/inventory/cleanup', {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      await api.post('/inventory/cleanup', {});
       fetchInventory();
       alert('Cleanup completed!');
     } catch (e) {
