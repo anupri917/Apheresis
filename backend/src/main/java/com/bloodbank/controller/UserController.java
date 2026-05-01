@@ -4,7 +4,6 @@ import com.bloodbank.entity.Donation;
 import com.bloodbank.entity.User;
 import com.bloodbank.repository.DonationRepository;
 import com.bloodbank.repository.UserRepository;
-import com.bloodbank.util.PdfGenerationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,8 +24,6 @@ public class UserController {
     @Autowired
     private DonationRepository donationRepository;
 
-    @Autowired
-    private PdfGenerationUtil pdfGenerationUtil;
 
     @GetMapping("/me")
     public ResponseEntity<?> getMyProfile(Authentication authentication) {
@@ -73,20 +70,6 @@ public class UserController {
                 .toList();
     }
 
-    @GetMapping("/donations/{id}/certificate")
-    public ResponseEntity<byte[]> downloadCertificate(@PathVariable Long id, Authentication authentication) {
-        Donation donation = donationRepository.findById(id).orElse(null);
-        if (donation == null || !donation.getDonor().getUsername().equals(authentication.getName())) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        byte[] pdfBytes = pdfGenerationUtil.generateDonationCertificate(donation);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=certificate.pdf")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes);
-    }
 
     // ---- Admin-only endpoints ----
 

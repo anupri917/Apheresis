@@ -42,23 +42,6 @@ const UserDashboard = () => {
     }
   };
 
-  const downloadCertificate = async (id) => {
-    try {
-      const res = await api.get(`/user/donations/${id}/certificate`, {
-        responseType: 'blob'
-      });
-      
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'Donation_Certificate.pdf');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (e) {
-      alert('Could not download certificate');
-    }
-  };
 
   const getLastEligibleDate = () => {
     if (!donations || donations.length === 0) return 'Eligible Now';
@@ -115,7 +98,6 @@ const UserDashboard = () => {
                 <th>Blood Group</th>
                 <th>Component</th>
                 <th>Units</th>
-                <th>Certificate</th>
               </tr>
             </thead>
             <tbody>
@@ -125,16 +107,11 @@ const UserDashboard = () => {
                   <td>{d.bloodGroup}</td>
                   <td>{d.bloodComponentType}</td>
                   <td>{d.units}</td>
-                  <td>
-                    <button className="btn-secondary" style={{ padding: '4px 8px', fontSize: '0.8rem' }} onClick={() => downloadCertificate(d.id)}>
-                      Download PDF
-                    </button>
-                  </td>
                 </tr>
               ))}
               {donations.length === 0 && (
                 <tr>
-                  <td colSpan="5">No records found.</td>
+                  <td colSpan="4">No records found.</td>
                 </tr>
               )}
             </tbody>

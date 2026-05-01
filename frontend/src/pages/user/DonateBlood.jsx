@@ -95,18 +95,6 @@ const DonateBlood = () => {
               ))}
             </select>
           </div>
-          <div className="form-group">
-            <label>Blood Component</label>
-            <select name="bloodComponentType" value={formData.bloodComponentType} onChange={handleChange}>
-              {['Whole Blood', 'RBC', 'Platelets', 'Plasma', 'Super Red'].map(bt => (
-                <option key={bt} value={bt}>{bt}</option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Units</label>
-            <input type="number" name="units" value={formData.units} onChange={handleChange} min="1" max="2" required />
-          </div>
           
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
             <button type="button" className="btn-secondary" onClick={() => setStep(1)} style={{ flex: 1 }}>Back</button>

@@ -15,12 +15,13 @@ public class AIService {
     private String geminiApiKey;
 
     private static final String GEMINI_URL =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=";
 
     private static final String SYSTEM_PROMPT =
         "You are Apheresis AI, a friendly and knowledgeable assistant for the Apheresis Blood Bank Management System. " +
         "You help users with questions about blood donation, blood types, eligibility, apheresis procedures (collecting specific components like platelets, plasma, RBCs), " +
-        "how to request blood, donation certificates, blood camp hosting, and navigating the Apheresis platform. " +
+        "how to request blood, blood camp hosting, and navigating the Apheresis platform. " +
+        "Note: Donors cannot choose the blood component or units; the system defaults to 1 unit of Whole Blood per donation. " +
         "Keep answers concise, warm, and medically accurate. Use bullet points or numbered lists when helpful. " +
         "If asked something outside blood banking, politely redirect to blood bank topics. " +
         "Always end sensitive medical questions by recommending they consult a doctor.";
@@ -29,25 +30,23 @@ public class AIService {
 
     public String getChatbotResponse(String userMessage) {
         if (geminiApiKey == null || geminiApiKey.isBlank()) {
-            return "⚠️ Apheresis AI is not configured yet. Please add your Gemini API key to application.properties.";
+            return "⚠️ Apheresis AI is not configured yet. Please add your Gemini API key to .env";
         }
 
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // Build Gemini request body
+            // Combine system prompt and user message for maximum compatibility
+            String combinedPrompt = SYSTEM_PROMPT + "\n\nUser Question: " + userMessage;
+
             Map<String, Object> body = Map.of(
-                "system_instruction", Map.of(
-                    "parts", List.of(Map.of("text", SYSTEM_PROMPT))
-                ),
                 "contents", List.of(
-                    Map.of("role", "user",
-                           "parts", List.of(Map.of("text", userMessage)))
+                    Map.of("parts", List.of(Map.of("text", combinedPrompt)))
                 ),
                 "generationConfig", Map.of(
                     "temperature", 0.7,
-                    "maxOutputTokens", 512
+                    "maxOutputTokens", 2048
                 )
             );
 
@@ -62,32 +61,24 @@ public class AIService {
                 
                 if (candidates != null && !candidates.isEmpty()) {
                     Map<String, Object> candidate = candidates.get(0);
-                    
-                    // Check if content exists (might be missing if blocked by safety filters)
                     if (candidate.containsKey("content")) {
                         Map<String, Object> content = (Map<String, Object>) candidate.get("content");
                         List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
                         if (parts != null && !parts.isEmpty()) {
                             return (String) parts.get(0).get("text");
                         }
-                    } else if (candidate.containsKey("finishReason")) {
-                        String reason = (String) candidate.get("finishReason");
-                        return "⚠️ Response blocked by AI safety filters. Reason: " + reason;
                     }
                 }
             }
-            return "I couldn't generate a response. The AI brain might be resting. Please try again.";
+            return "I couldn't generate a response. Please try again.";
 
         } catch (org.springframework.web.client.HttpClientErrorException e) {
-            if (e.getStatusCode().value() == 400) {
-                return "⚠️ Invalid Gemini API key. Please check your configuration.";
-            } else if (e.getStatusCode().value() == 429) {
-                return "⚠️ Too many requests. Please wait a moment and try again.";
-            }
-            return "⚠️ Error: " + e.getStatusText();
+            String errorBody = e.getResponseBodyAsString();
+            System.err.println("Gemini API Error: " + errorBody);
+            return "⚠️ Google API Error (" + e.getStatusCode() + "): " + errorBody;
         } catch (Exception e) {
             e.printStackTrace();
-            return "⚠️ Could not connect to Apheresis AI. Please try again.";
+            return "⚠️ Could not connect to Apheresis AI: " + e.getMessage();
         }
     }
 }
