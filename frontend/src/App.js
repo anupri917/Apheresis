@@ -5,6 +5,8 @@ import Sidebar from './components/layout/Sidebar';
 import Chatbot from './components/chat/Chatbot';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import WorkerDashboard from './pages/worker/WorkerDashboard';
 import UserDashboard from './pages/user/UserDashboard';
@@ -30,16 +32,16 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 };
 
 function App() {
-  // Use state so the app re-renders when auth changes (login/logout)
+
   const [auth, setAuth] = useState(!!localStorage.getItem('token'));
 
   useEffect(() => {
-    // Listen for storage events (when Navbar clears token on logout)
+
     const syncAuth = () => setAuth(!!localStorage.getItem('token'));
 
     window.addEventListener('storage', syncAuth);
 
-    // Also poll every 500ms as a fallback (same-tab logout doesn't fire 'storage')
+
     const interval = setInterval(syncAuth, 500);
 
     return () => {
@@ -58,8 +60,10 @@ function App() {
             <Routes>
               <Route path="/login" element={!auth ? <Login /> : <Navigate to="/dashboard" />} />
               <Route path="/register" element={!auth ? <Register /> : <Navigate to="/dashboard" />} />
-              
-              {/* Public Routes */}
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+
+              {}
               <Route path="/" element={<Home />} />
               <Route path="/activity" element={<Activity />} />
               <Route path="/team" element={<AboutTeam />} />
@@ -70,25 +74,25 @@ function App() {
                   <AdminDashboard />
                 </ProtectedRoute>
               } />
-              
+
               <Route path="/worker" element={
                 <ProtectedRoute allowedRoles={['ROLE_WORKER']}>
                   <WorkerDashboard />
                 </ProtectedRoute>
               } />
-              
+
               <Route path="/user" element={
                 <ProtectedRoute allowedRoles={['ROLE_USER']}>
                   <UserDashboard />
                 </ProtectedRoute>
               } />
-              
+
               <Route path="/donate" element={
                 <ProtectedRoute allowedRoles={['ROLE_USER']}>
                   <DonateBlood />
                 </ProtectedRoute>
               } />
-              
+
               <Route path="/request" element={
                 <ProtectedRoute allowedRoles={['ROLE_USER']}>
                   <RequestBlood />

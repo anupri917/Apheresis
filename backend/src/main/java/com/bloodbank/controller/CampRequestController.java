@@ -15,19 +15,19 @@ public class CampRequestController {
     @Autowired
     private CampRequestRepository campRequestRepository;
 
-    // Public — anyone can submit a camp request (no auth needed)
+
     @PostMapping
     public ResponseEntity<CampRequest> submit(@RequestBody CampRequest request) {
         return ResponseEntity.ok(campRequestRepository.save(request));
     }
 
-    // Admin only — list all submissions
+
     @GetMapping
     public List<CampRequest> getAll() {
         return campRequestRepository.findAll();
     }
 
-    // Admin only — update status (PENDING → ACCEPTED / REJECTED / REVIEWED)
+
     @PutMapping("/{id}/status")
     public ResponseEntity<CampRequest> updateStatus(@PathVariable Long id, @RequestParam String status) {
         return campRequestRepository.findById(id).map(req -> {
@@ -36,7 +36,7 @@ public class CampRequestController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // Admin only — delete a request
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         return campRequestRepository.findById(id).map(req -> {

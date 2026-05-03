@@ -18,7 +18,7 @@ public class CampRequest {
     @Column(length = 2000)
     private String message;
 
-    private String status; // PENDING, REVIEWED, ACCEPTED, REJECTED
+    private String status;
 
     private LocalDateTime submittedAt;
 

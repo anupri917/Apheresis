@@ -35,21 +35,21 @@ public class RequestController {
         request.setRequester(user);
         request.setRequestDate(LocalDateTime.now());
         request.setStatus("PENDING");
-        
-        // Smart matching: Inventory first
+
+
         long availableUnits = bloodUnitRepository.countByBloodGroupAndBloodComponentTypeAndStatus(
                 request.getBloodGroup(), request.getBloodComponentType(), "AVAILABLE");
-                
+
         if (availableUnits >= request.getQuantityUnits()) {
             System.out.println("Smart Match: Inventory has enough units for request from " + username);
         } else {
-            // Not enough in inventory, check Emergency Donors if urgent or critical
+
             if ("urgent".equalsIgnoreCase(request.getUrgency()) || "critical".equalsIgnoreCase(request.getUrgency())) {
                 List<User> emergencyDonors = userRepository.findByIsEmergencyDonorAndBloodGroup(true, request.getBloodGroup());
                 System.out.println("Smart Match: Shortage! Alerting " + emergencyDonors.size() + " emergency donors.");
             }
         }
-        
+
         return ResponseEntity.ok(requestRepository.save(request));
     }
 
@@ -61,7 +61,7 @@ public class RequestController {
                 .collect(Collectors.toList());
     }
 
-    // For Worker/Admin
+
     @GetMapping
     public List<BloodRequest> getAllRequests() {
         return requestRepository.findAll();
@@ -71,12 +71,12 @@ public class RequestController {
     public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestParam String status) {
         return requestRepository.findById(id).map(request -> {
             request.setStatus(status);
-            
-            // if fulfilled and requester is govt officer apply discount
+
+
             if ("FULFILLED".equals(status)) {
                 User u = request.getRequester();
                 if (u.isGovtOfficer()) {
-                    // Apply 20% discount logic here, mock printing
+
                     System.out.println("20% discount applied for govt officer: " + u.getUsername());
                 }
             }

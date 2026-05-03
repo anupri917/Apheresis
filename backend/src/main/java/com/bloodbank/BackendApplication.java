@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class BackendApplication {
 
     public static void main(String[] args) {
-        // Load .env from multiple potential locations for robustness
+
         String[] locations = {"./", "../", "./backend/"};
         for (String location : locations) {
             Dotenv dotenv = Dotenv.configure()

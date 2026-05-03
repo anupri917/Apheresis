@@ -46,11 +46,11 @@ public class DataSeeder implements CommandLineRunner {
         System.out.println("=== Apheresis DataSeeder: Checking Database ===");
         Random random = new Random();
 
-        // ---------------------------------------------------------------
-        // 1. Always seed a dedicated dummy donor user so requests/donations
-        //    can be created regardless of what role "Anshuma" (or any real
-        //    user) has registered with.
-        // ---------------------------------------------------------------
+
+
+
+
+
         User dummyDonor;
         var existingDummy = userRepository.findByUsername("donor_demo");
         if (existingDummy.isEmpty()) {
@@ -68,14 +68,14 @@ public class DataSeeder implements CommandLineRunner {
             dummyDonor = existingDummy.get();
         }
 
-        // Also attach requests/donations to any REAL user accounts found
+
         List<User> allDonors = userRepository.findAll().stream()
                 .filter(u -> "ROLE_USER".equals(u.getRole()))
                 .toList();
 
-        // ---------------------------------------------------------------
-        // 2. Seed Blood Units (35 bags across all blood groups)
-        // ---------------------------------------------------------------
+
+
+
         if (bloodUnitRepository.count() == 0) {
             System.out.println("Seeding 35 blood units...");
             for (int i = 0; i < 35; i++) {
@@ -88,7 +88,7 @@ public class DataSeeder implements CommandLineRunner {
                 unit.setCollectionDate(collectionDate);
                 unit.setExpiryDate(collectionDate.plusDays(42));
 
-                // ~10% chance of already being expired for realism
+
                 if (random.nextInt(10) == 0) {
                     unit.setStatus("EXPIRED");
                     unit.setExpiryDate(LocalDate.now().minusDays(1));
@@ -100,18 +100,18 @@ public class DataSeeder implements CommandLineRunner {
             System.out.println("Blood units seeded.");
         }
 
-        // ---------------------------------------------------------------
-        // 3. Seed Blood Requests (attached to dummyDonor + all real donors)
-        // ---------------------------------------------------------------
+
+
+
         if (bloodRequestRepository.count() == 0) {
             System.out.println("Seeding blood requests...");
 
-            // 12 requests for the demo donor
+
             for (int i = 0; i < 12; i++) {
                 bloodRequestRepository.save(buildRequest(dummyDonor, i, random));
             }
 
-            // 3 requests for each real user account
+
             for (User u : allDonors) {
                 for (int i = 0; i < 3; i++) {
                     bloodRequestRepository.save(buildRequest(u, i, random));
@@ -120,9 +120,9 @@ public class DataSeeder implements CommandLineRunner {
             System.out.println("Blood requests seeded.");
         }
 
-        // ---------------------------------------------------------------
-        // 4. Seed Donations (attached to dummyDonor + all real donors)
-        // ---------------------------------------------------------------
+
+
+
         if (donationRepository.count() == 0) {
             System.out.println("Seeding donations...");
 
@@ -148,7 +148,7 @@ public class DataSeeder implements CommandLineRunner {
         req.setBloodComponentType(COMPONENTS[random.nextInt(COMPONENTS.length)]);
         req.setQuantityUnits(random.nextInt(4) + 1);
         req.setUrgency(URGENCIES[random.nextInt(URGENCIES.length)]);
-        // First few always PENDING so the admin always has actionable items
+
         req.setStatus(index < 4 ? "PENDING" : STATUSES[random.nextInt(STATUSES.length)]);
         req.setRequestDate(LocalDateTime.now().minusDays(random.nextInt(10)).minusHours(random.nextInt(24)));
         return req;

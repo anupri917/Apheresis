@@ -26,17 +26,17 @@ const Contact = () => {
   };
 
   const socialBtnStyle = {
-    display: 'flex', 
-    alignItems: 'center', 
-    gap: '0.8rem', 
-    color: 'white', 
-    background: 'var(--primary)', 
-    padding: '1rem 2rem', 
-    borderRadius: '50px', 
-    textDecoration: 'none', 
-    fontWeight: 'bold', 
-    fontSize: '1.3rem', 
-    boxShadow: '0 8px 20px rgba(214, 40, 40, 0.4)', 
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.8rem',
+    color: 'white',
+    background: 'var(--primary)',
+    padding: '1rem 2rem',
+    borderRadius: '50px',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    fontSize: '1.3rem',
+    boxShadow: '0 8px 20px rgba(214, 40, 40, 0.4)',
     transition: 'transform 0.3s, box-shadow 0.3s',
     cursor: 'pointer'
   };
@@ -53,8 +53,8 @@ const Contact = () => {
 
   return (
     <div className="contact-container" style={{ padding: '4rem 2rem', maxWidth: '800px', margin: '0 auto', minHeight: 'calc(100vh - 70px)' }}>
-      
-      {/* Eye-catching Social Media Links */}
+
+      {}
       <div className="card glass" style={{ marginBottom: '3rem', textAlign: 'center', background: 'linear-gradient(135deg, var(--secondary-light) 0%, var(--pink-light) 100%)', border: '2px solid var(--primary-light)' }}>
         <h2 style={{ color: 'var(--primary-dark)', marginBottom: '1rem', fontSize: '2.5rem' }}>Connect With Us</h2>
         <p style={{ color: 'var(--primary-dark)', marginBottom: '2.5rem', fontSize: '1.2rem', opacity: 0.9 }}>
@@ -76,7 +76,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Collaboration Form */}
+      {}
       <div className="card glass" style={{ padding: '3rem' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '1rem', color: 'var(--primary)' }}>Host a Camp</h1>
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1.1rem' }}>

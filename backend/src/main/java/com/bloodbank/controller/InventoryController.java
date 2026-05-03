@@ -24,7 +24,7 @@ public class InventoryController {
     @PostMapping
     public BloodUnit addUnit(@RequestBody BloodUnit unit) {
         if (unit.getCollectionDate() != null) {
-            // Assume expiry is 42 days from collection
+
             unit.setExpiryDate(unit.getCollectionDate().plusDays(42));
         }
         unit.setStatus("AVAILABLE");
@@ -54,7 +54,7 @@ public class InventoryController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // Worker only - clean up expired blood
+
     @PostMapping("/cleanup")
     public ResponseEntity<?> cleanupExpired() {
         LocalDate today = LocalDate.now();

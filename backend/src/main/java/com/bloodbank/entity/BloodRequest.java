@@ -14,13 +14,13 @@ public class BloodRequest {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User requester; // The User or Receiver requesting blood
+    private User requester;
 
     private String bloodGroup;
     private String bloodComponentType;
     private Integer quantityUnits;
-    private String status; // PENDING, APPROVED, REJECTED, FULFILLED
-    private String urgency; // normal, urgent, critical
+    private String status;
+    private String urgency;
 
     private LocalDateTime requestDate;
 }

@@ -18,7 +18,7 @@ const Navbar = () => {
         <img src={require('../../assets/apheresis_logo.jpeg')} alt="Apheresis Logo" style={{height: '40px', width: '40px', borderRadius: '50%'}} />
         <span>Apheresis</span>
       </div>
-      
+
       {!auth ? (
         <div className="nav-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <span style={{cursor: 'pointer'}} onClick={() => navigate('/')}>Home</span>

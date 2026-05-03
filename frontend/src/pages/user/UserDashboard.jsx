@@ -45,7 +45,7 @@ const UserDashboard = () => {
 
   const getLastEligibleDate = () => {
     if (!donations || donations.length === 0) return 'Eligible Now';
-    // Sort donations by date descending
+
     const sorted = [...donations].sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate));
     const last = sorted[0];
     if (last.nextEligibleDate) {
@@ -141,7 +141,7 @@ const UserDashboard = () => {
                   <td>{r.bloodComponentType}</td>
                   <td>{r.quantityUnits}</td>
                   <td>
-                    <span style={{ 
+                    <span style={{
                       color: r.urgency === 'Critical' ? 'var(--danger)' : r.urgency === 'Urgent' ? 'var(--warning)' : 'inherit',
                       fontWeight: r.urgency !== 'Normal' ? 'bold' : 'normal'
                     }}>

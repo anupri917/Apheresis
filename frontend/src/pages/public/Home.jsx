@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Import assets
+
 import heroImg from '../../assets/blood_donation3.jpg';
 import groupsImg from '../../assets/blood_groups.jpg';
 import benefitsImg from '../../assets/blood_donation_profits.jpg';
@@ -12,13 +12,13 @@ const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="faq-item" style={{ borderBottom: '1px solid var(--border-color)', padding: '1rem 0' }}>
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
-        style={{ 
-          width: '100%', display: 'flex', justifyContent: 'space-between', 
-          background: 'none', border: 'none', padding: 0, 
-          color: 'var(--text-color)', fontSize: '1.1rem', fontWeight: '600', 
-          textAlign: 'left', cursor: 'pointer' 
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          width: '100%', display: 'flex', justifyContent: 'space-between',
+          background: 'none', border: 'none', padding: 0,
+          color: 'var(--text-color)', fontSize: '1.1rem', fontWeight: '600',
+          textAlign: 'left', cursor: 'pointer'
         }}
       >
         <span>{question}</span>
@@ -38,12 +38,12 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Hero Section */}
-      <section 
-        className="hero-section" 
-        style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+      {}
+      <section
+        className="hero-section"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
           padding: '4rem 2rem',
@@ -68,7 +68,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* History and Introduction */}
+      {}
       <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="card glass" style={{ padding: '3rem' }}>
           <h2 style={{ color: 'var(--primary-dark)', fontSize: '2.5rem', marginBottom: '1.5rem' }}>The Journey of Blood Donation</h2>
@@ -81,7 +81,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Blood Classification & Compatibility */}
+      {}
       <section style={{ padding: '4rem 2rem', background: 'var(--surface-color)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '4rem', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
@@ -114,7 +114,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Types of Donations */}
+      {}
       <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{ textAlign: 'center', color: 'var(--primary-dark)', fontSize: '2.5rem', marginBottom: '3rem' }}>Types of Blood Donations</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
@@ -134,7 +134,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Eligibility */}
+      {}
       <section style={{ padding: '4rem 2rem', background: 'linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%)', color: 'white' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '4rem', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
@@ -165,7 +165,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Benefits and Facts */}
+      {}
       <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: '4rem', flexDirection: 'row-reverse', alignItems: 'center', marginBottom: '4rem' }}>
           <div style={{ flex: 1 }}>
@@ -212,12 +212,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Post-Donation Diet */}
+      {}
       <section style={{ padding: '4rem 2rem', background: 'var(--surface-color)', textAlign: 'center' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{ color: 'var(--primary-dark)', fontSize: '2.5rem', marginBottom: '1rem' }}>Diet After Donation</h2>
           <p style={{ fontSize: '1.1rem', marginBottom: '3rem' }}>Replenish your body with the right nutrients after saving a life.</p>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem' }}>
             <div className="card">
               <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>💧</div>
@@ -238,37 +238,37 @@ const Home = () => {
         </div>
       </section>
 
-      {/* FAQs */}
+      {}
       <section style={{ padding: '4rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
         <h2 style={{ textAlign: 'center', color: 'var(--primary)', fontSize: '2.5rem', marginBottom: '3rem' }}>Frequently Asked Questions</h2>
         <div className="card glass">
-          <FAQItem 
-            question="How much blood is taken during a donation?" 
-            answer="During a standard whole blood donation, approximately one pint (about 470 milliliters) of blood is collected. The average adult has about 10 pints of blood." 
+          <FAQItem
+            question="How much blood is taken during a donation?"
+            answer="During a standard whole blood donation, approximately one pint (about 470 milliliters) of blood is collected. The average adult has about 10 pints of blood."
           />
-          <FAQItem 
-            question="Is blood donation good for health?" 
-            answer="Yes! It helps reduce the risk of cardiovascular diseases by lowering iron levels, improves circulation, and stimulates the production of new blood cells. Plus, you get a mini health check-up." 
+          <FAQItem
+            question="Is blood donation good for health?"
+            answer="Yes! It helps reduce the risk of cardiovascular diseases by lowering iron levels, improves circulation, and stimulates the production of new blood cells. Plus, you get a mini health check-up."
           />
-          <FAQItem 
-            question="Can I donate if I have a cold or flu?" 
-            answer="No, individuals experiencing a cold, flu, or any other illness should refrain from donating until they have fully recovered. Donors must be in good health to ensure safety." 
+          <FAQItem
+            question="Can I donate if I have a cold or flu?"
+            answer="No, individuals experiencing a cold, flu, or any other illness should refrain from donating until they have fully recovered. Donors must be in good health to ensure safety."
           />
-          <FAQItem 
-            question="How often can I donate blood?" 
-            answer="For whole blood, you can typically donate every 56 days (8 weeks). Platelet donors can donate more frequently (every 7 days), and plasma donors every 28 days." 
+          <FAQItem
+            question="How often can I donate blood?"
+            answer="For whole blood, you can typically donate every 56 days (8 weeks). Platelet donors can donate more frequently (every 7 days), and plasma donors every 28 days."
           />
-          <FAQItem 
-            question="What should I eat after donating?" 
-            answer="Drink plenty of water and consume iron-rich foods like leafy greens, meat, and beans. Pair these with Vitamin C-rich foods (like oranges) to help your body absorb the iron." 
+          <FAQItem
+            question="What should I eat after donating?"
+            answer="Drink plenty of water and consume iron-rich foods like leafy greens, meat, and beans. Pair these with Vitamin C-rich foods (like oranges) to help your body absorb the iron."
           />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ 
-        background: 'var(--secondary)', 
-        padding: '4rem 2rem 2rem', 
+      {}
+      <footer style={{
+        background: 'var(--secondary)',
+        padding: '4rem 2rem 2rem',
         textAlign: 'center',
         color: 'var(--primary-dark)',
         borderTop: '2px solid rgba(214, 40, 40, 0.1)'

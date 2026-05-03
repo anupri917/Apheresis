@@ -1,15 +1,15 @@
 import React from 'react';
 
-// Import assets matching each camp name
-import campImg1 from '../../assets/city_centre_mega_drive.webp';
-import campImg2 from '../../assets/blood_donation2.jpg';   // corporate_lifesaver.cms is not a valid image format
+
+import campImg1 from '../../assets/city_centre_mega_drive.jpg';
+import campImg2 from '../../assets/corporate_lifesavers_event.jpg';
 import campImg3 from '../../assets/Awareness_camp.webp';
-import campImg4 from '../../assets/university_blodd_fest.jpg';
-import campImg5 from '../../assets/weekend_heroes_drive.jpg';
-import campImg6 from '../../assets/global_awareness_day_camp.jpg';
+import campImg4 from '../../assets/university_blood_fest.jpg';
+import campImg5 from '../../assets/weekend_heroes_drive.webp';
+import campImg6 from '../../assets/global_awareness_day_program.jpg';
 
 const Activity = () => {
-  // Mock data for recent camps
+
   const recentCamps = [
     {
       id: 1,
@@ -81,21 +81,21 @@ const Activity = () => {
           A look back at our successful blood donation camps and events. Your participation makes these numbers possible.
         </p>
 
-        {/* Improved Grid Layout */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
-          gap: '2.5rem', 
-          alignItems: 'stretch' 
+        {}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gap: '2.5rem',
+          alignItems: 'stretch'
         }}>
           {recentCamps.map((camp) => (
-            <div 
-              key={camp.id} 
-              className="card glass" 
-              style={{ 
-                padding: 0, 
-                overflow: 'hidden', 
-                display: 'flex', 
+            <div
+              key={camp.id}
+              className="card glass"
+              style={{
+                padding: 0,
+                overflow: 'hidden',
+                display: 'flex',
                 flexDirection: 'column',
                 textAlign: 'left',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -103,12 +103,12 @@ const Activity = () => {
               onMouseOver={e => e.currentTarget.style.transform = 'translateY(-8px)'}
               onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              {/* Image Section */}
+              {}
               <div style={{ height: '220px', width: '100%', overflow: 'hidden', position: 'relative' }}>
-                <img 
-                  src={camp.image} 
-                  alt={camp.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                <img
+                  src={camp.image}
+                  alt={camp.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <div style={{
                   position: 'absolute',
@@ -126,12 +126,12 @@ const Activity = () => {
                 </div>
               </div>
 
-              {/* Content Section */}
+              {}
               <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <h3 style={{ color: 'var(--primary-dark)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
                   {camp.title}
                 </h3>
-                
+
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                     📅 {camp.date}

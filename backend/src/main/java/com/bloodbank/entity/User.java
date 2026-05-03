@@ -8,22 +8,30 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String role; // ROLE_ADMIN, ROLE_WORKER, ROLE_USER
-    private boolean isGovtOfficer; // For the discount
-    
+    private String role;
+    private boolean isGovtOfficer;
+
     @Column(unique = true)
     private String email;
-    
+
     @Column(name = "government_id")
-    private String governmentId; // Encrypted
+    private String governmentId;
+
+    @Column(name = "government_id_type")
+    private String governmentIdType;
+
+    private String resetToken;
+    private java.time.LocalDateTime tokenExpiry;
+    private int resetAttempts;
+    private java.time.LocalDateTime lastResetAttempt;
 
     private java.time.LocalDate lastDonationDate;
-    
-    // New Apheresis Fields
-    private String bloodGroup; // A+, O-, etc.
+
+
+    private String bloodGroup;
     private Double bmi;
     private Double haemoglobin;
-    private String medicalHistory; // String text field
+    private String medicalHistory;
     private boolean isEmergencyDonor;
-    private String empId; // For workers
+    private String empId;
 }

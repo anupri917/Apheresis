@@ -26,23 +26,23 @@ const Chatbot = () => {
     const query = text || input;
     if (!query.trim()) return;
 
-    // Add user message to UI
+
     const userMsg = { text: query, isBot: false };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
 
     try {
-      // Call backend which now uses Gemini API
+
       const response = await api.post('/chatbot/ask', { query });
-      
+
       setMessages(prev => [...prev, { text: response.data.answer, isBot: true }]);
     } catch (error) {
       console.error('Chatbot error:', error);
       const baseUrl = api.defaults.baseURL || 'unknown';
-      setMessages(prev => [...prev, { 
-        text: `⚠️ I'm having trouble connecting to my AI brain.\n\n**Debug Info:**\n- Connection to: \`${baseUrl}\` failed.\n- Check if backend is running.\n- Ensure \`.env\` has a valid Gemini key.`, 
-        isBot: true 
+      setMessages(prev => [...prev, {
+        text: `⚠️ I'm having trouble connecting to my AI brain.\n\n**Debug Info:**\n- Connection to: \`${baseUrl}\` failed.\n- Check if backend is running.\n- Ensure \`.env\` has a valid Gemini key.`,
+        isBot: true
       }]);
     } finally {
       setIsTyping(false);
@@ -52,7 +52,7 @@ const Chatbot = () => {
   const formatText = (text) => {
     if (!text) return null;
     return text.split('\n').map((line, i) => {
-      // Basic bold support: **text** -> <strong>text</strong>
+
       const parts = line.split(/(\*\*.*?\*\*)/g);
       return (
         <span key={i}>
@@ -70,7 +70,7 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Floating Button */}
+      {}
       {!isOpen && (
         <button
           style={{
@@ -90,7 +90,7 @@ const Chatbot = () => {
         </button>
       )}
 
-      {/* Chat Window */}
+      {}
       {isOpen && (
         <div
           className="glass animate-fade-in"
@@ -101,7 +101,7 @@ const Chatbot = () => {
             borderRadius: '20px', boxShadow: '0 20px 60px rgba(0,0,0,0.2)'
           }}
         >
-          {/* Header */}
+          {}
           <div style={{ background: 'var(--primary)', padding: '1rem 1.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -120,7 +120,7 @@ const Chatbot = () => {
             </button>
           </div>
 
-          {/* Messages */}
+          {}
           <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(255,240,243,0.3)' }}>
             {messages.map((msg, idx) => (
               <div
@@ -143,7 +143,7 @@ const Chatbot = () => {
               </div>
             ))}
 
-            {/* Typing indicator */}
+            {}
             {isTyping && (
               <div style={{ alignSelf: 'flex-start', background: 'white', padding: '10px 16px', borderRadius: '16px', borderBottomLeftRadius: '4px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', display: 'flex', gap: '4px', alignItems: 'center' }}>
                 {[0, 1, 2].map(i => (
@@ -152,7 +152,7 @@ const Chatbot = () => {
               </div>
             )}
 
-            {/* Quick replies (show only at start) */}
+            {}
             {messages.length <= 1 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignSelf: 'flex-start', width: '100%' }}>
                 {QUICK_REPLIES.map((qr, i) => (
@@ -177,7 +177,7 @@ const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
+          {}
           <div style={{ padding: '0.8rem 1rem', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '0.5rem', background: 'white' }}>
             <input
               type="text"

@@ -39,9 +39,9 @@ public class UserController {
 
         donation.setDonor(user);
         donation.setDonationDate(LocalDate.now());
-        
-        // Calculate next eligible date based on component
-        int daysToWait = 56; // default for whole blood / rbc
+
+
+        int daysToWait = 56;
         if (donation.getBloodComponentType() != null) {
             switch (donation.getBloodComponentType().toLowerCase()) {
                 case "platelets": daysToWait = 7; break;
@@ -53,7 +53,7 @@ public class UserController {
             }
         }
         donation.setNextEligibleDate(LocalDate.now().plusDays(daysToWait));
-        
+
         user.setLastDonationDate(LocalDate.now());
         userRepository.save(user);
 
@@ -63,27 +63,27 @@ public class UserController {
     @GetMapping("/donations")
     public List<Donation> getMyDonations(Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        // Since Donation has User, we can query by User ID. But simplest is streaming or adding a repo method.
-        // For simplicity, fetch all and filter or add method to repo.
+
+
         return donationRepository.findAll().stream()
                 .filter(d -> d.getDonor().getId().equals(user.getId()))
                 .toList();
     }
 
 
-    // ---- Admin-only endpoints ----
+
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
-        // Strip passwords before sending
+
         users.forEach(u -> u.setPassword(null));
         return ResponseEntity.ok(users);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id, Authentication authentication) {
-        // Prevent admin from deleting themselves
+
         User self = userRepository.findByUsername(authentication.getName()).orElse(null);
         if (self != null && self.getId().equals(id)) {
             return ResponseEntity.badRequest().body("Cannot delete your own account");

@@ -58,7 +58,7 @@ const WorkerDashboard = () => {
     }
   };
 
-  const filteredInventory = inventory.filter(u => 
+  const filteredInventory = inventory.filter(u =>
     (searchBg === '' || u.bloodGroup === searchBg) &&
     (searchType === '' || u.bloodComponentType === searchType)
   );
@@ -67,14 +67,14 @@ const WorkerDashboard = () => {
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <h2>Worker Dashboard</h2>
 
-      {/* Alerts */}
+      {}
       {requests.filter(r => r.status === 'PENDING' && (r.urgency === 'Critical' || r.urgency === 'Urgent')).length > 0 && (
         <div style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', borderLeft: '4px solid var(--danger)', borderRadius: '4px' }}>
           <h3 style={{ color: 'var(--danger)', margin: 0 }}>⚠️ Emergency Alerts</h3>
           <p style={{ margin: '0.5rem 0 0 0' }}>There are pending Critical or Urgent requests. Please process them immediately!</p>
         </div>
       )}
-      
+
       <div className="card glass">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
           <h3>Inventory Management</h3>
@@ -150,7 +150,7 @@ const WorkerDashboard = () => {
                   <td>{req.bloodComponentType}</td>
                   <td>{req.quantityUnits}</td>
                   <td>
-                    <span style={{ 
+                    <span style={{
                       color: req.urgency === 'Critical' ? 'var(--danger)' : req.urgency === 'Urgent' ? 'var(--warning)' : 'inherit',
                       fontWeight: req.urgency !== 'Normal' ? 'bold' : 'normal'
                     }}>

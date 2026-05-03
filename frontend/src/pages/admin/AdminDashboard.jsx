@@ -21,9 +21,9 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchData();
-    // Auto-refresh every 30 seconds to pick up user/worker activity
+
     const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
 
   const fetchData = async () => {
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // Process data for charts
+
   const bloodGroupCounts = inventory.reduce((acc, unit) => {
     if (unit.status === 'AVAILABLE') {
       acc[unit.bloodGroup] = (acc[unit.bloodGroup] || 0) + (unit.units || 1);
@@ -208,7 +208,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* User & Worker Management Table */}
+      {}
       <div className="glass" style={{ padding: '2rem' }}>
         <h3 style={{ marginBottom: '1.5rem' }}>User &amp; Worker Management</h3>
         <div className="table-container">
@@ -272,7 +272,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Camp Hosting Requests */}
+      {}
       <div className="glass" style={{ padding: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <h3>🏕️ Camp Hosting Requests</h3>

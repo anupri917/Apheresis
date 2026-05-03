@@ -57,7 +57,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/inventory/**").hasAnyRole("ADMIN", "WORKER")
                         .requestMatchers("/api/v1/requests/**").hasAnyRole("ADMIN", "WORKER", "USER")
-                        // Other endpoints can be accessible by authenticated users
+
                         .anyRequest().authenticated()
                 );
 

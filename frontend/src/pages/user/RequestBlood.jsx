@@ -59,7 +59,7 @@ const RequestBlood = () => {
             <option value="Critical">Critical</option>
           </select>
         </div>
-        
+
         {formData.urgency !== 'Normal' && (
           <div style={{ padding: '1rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--danger)', borderRadius: '8px' }}>
             <p style={{ color: 'var(--danger)', fontSize: '0.9rem', margin: 0 }}>

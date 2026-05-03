@@ -17,8 +17,8 @@ public class Donation {
     private User donor;
 
     private LocalDate donationDate;
-    private String bloodGroup; // A+, O-, etc.
-    private String bloodComponentType; // whole blood, rbc, platelets, plasma, super red
+    private String bloodGroup;
+    private String bloodComponentType;
     private Integer quantityMl;
     private Integer units;
     private LocalDate nextEligibleDate;

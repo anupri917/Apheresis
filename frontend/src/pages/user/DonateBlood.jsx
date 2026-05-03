@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const DonateBlood = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    age: '', weight: '', tattoo: false, alcohol: false, 
+    age: '', weight: '', tattoo: false, alcohol: false,
     medicine: false, illness: false, haemoglobin: '',
     bloodGroup: 'A+', bloodComponentType: 'Whole Blood', units: 1
   });
@@ -21,7 +21,7 @@ const DonateBlood = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    // basic validation
+
     if (formData.age < 18 || formData.age > 65 || formData.weight < 50 || formData.tattoo || formData.alcohol || formData.illness || formData.haemoglobin < 12.5) {
       alert("You are not currently eligible to donate based on the criteria.");
       return;
@@ -48,7 +48,7 @@ const DonateBlood = () => {
   return (
     <div className="animate-fade-in card glass" style={{ maxWidth: '600px', margin: '0 auto' }}>
       <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Donate Blood</h2>
-      
+
       {step === 1 && (
         <form onSubmit={handleNext} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <h3>Step 1: Eligibility Check</h3>
@@ -66,7 +66,7 @@ const DonateBlood = () => {
               <input type="number" step="0.1" name="haemoglobin" value={formData.haemoglobin} onChange={handleChange} required />
             </div>
           </div>
-          
+
           <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
             <input type="checkbox" name="tattoo" checked={formData.tattoo} onChange={handleChange} style={{ width: 'auto' }} />
             <label>Tattoo or piercing in the last 6 months?</label>
@@ -79,7 +79,7 @@ const DonateBlood = () => {
             <input type="checkbox" name="illness" checked={formData.illness} onChange={handleChange} style={{ width: 'auto' }} />
             <label>Currently suffering from cold, flu or other illnesses?</label>
           </div>
-          
+
           <button type="submit" className="btn-primary" style={{ marginTop: '1rem' }}>Next Step</button>
         </form>
       )}
@@ -95,7 +95,7 @@ const DonateBlood = () => {
               ))}
             </select>
           </div>
-          
+
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
             <button type="button" className="btn-secondary" onClick={() => setStep(1)} style={{ flex: 1 }}>Back</button>
             <button type="submit" className="btn-primary" style={{ flex: 1 }}>Submit Donation</button>

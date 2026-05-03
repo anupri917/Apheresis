@@ -37,7 +37,7 @@ public class AIService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // Combine system prompt and user message for maximum compatibility
+
             String combinedPrompt = SYSTEM_PROMPT + "\n\nUser Question: " + userMessage;
 
             Map<String, Object> body = Map.of(
@@ -58,7 +58,7 @@ public class AIService {
             if (response.getBody() != null) {
                 List<Map<String, Object>> candidates =
                     (List<Map<String, Object>>) response.getBody().get("candidates");
-                
+
                 if (candidates != null && !candidates.isEmpty()) {
                     Map<String, Object> candidate = candidates.get(0);
                     if (candidate.containsKey("content")) {

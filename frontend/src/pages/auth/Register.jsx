@@ -10,6 +10,7 @@ const Register = () => {
     email: '',
     role: 'ROLE_USER',
     governmentId: '',
+    governmentIdType: 'Aadhar Card',
     isGovtOfficer: false,
     bloodGroup: 'A+',
     bmi: '',
@@ -40,21 +41,21 @@ const Register = () => {
   };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      minHeight: 'calc(100vh - 70px)', 
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: 'calc(100vh - 70px)',
       padding: '2rem',
-      background: 'var(--bg-color)' 
+      background: 'var(--bg-color)'
     }}>
-      
-      {/* Centered Form Section */}
-      <div className="card" style={{ 
-        width: '100%', 
-        maxWidth: '650px', 
-        padding: '3rem', 
-        border: '1px solid var(--pink-light)', 
+
+      {}
+      <div className="card" style={{
+        width: '100%',
+        maxWidth: '650px',
+        padding: '3rem',
+        border: '1px solid var(--pink-light)',
         boxShadow: '0 15px 35px rgba(248, 200, 220, 0.4)',
         borderRadius: '24px',
         backgroundColor: 'white',
@@ -63,12 +64,12 @@ const Register = () => {
       }}>
         <h2 style={{ textAlign: 'center', color: 'var(--primary-dark)', fontSize: '2.5rem', marginBottom: '0.5rem', fontWeight: '800' }}>Join Apheresis</h2>
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2.5rem' }}>Create an account to start saving lives</p>
-        
+
         {error && <div style={{ background: 'var(--danger)', color: 'white', padding: '1rem', borderRadius: '8px', textAlign: 'center', marginBottom: '1.5rem', fontWeight: '600' }}>{error}</div>}
-        
+
         <form onSubmit={handleRegister} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
-          
-          {/* Basic Info */}
+
+          {}
           <div style={{ gridColumn: '1 / -1' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--primary-dark)' }}>Role</label>
             <select name="role" value={formData.role} onChange={handleChange} style={{ padding: '12px', fontSize: '1.05rem', borderRadius: '8px', border: '1px solid var(--border-color)', width: '100%', outline: 'none', background: 'white' }}>
@@ -99,7 +100,7 @@ const Register = () => {
             </select>
           </div>
 
-          {/* User/Donor Specific */}
+          {}
           {formData.role === 'ROLE_USER' && (
             <>
               <div>
@@ -121,7 +122,7 @@ const Register = () => {
             </>
           )}
 
-          {/* Worker Specific */}
+          {}
           {formData.role === 'ROLE_WORKER' && (
             <div style={{ gridColumn: '1 / -1' }}>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--primary-dark)' }}>Employee ID</label>
@@ -129,10 +130,20 @@ const Register = () => {
             </div>
           )}
 
-          {/* Government / Security */}
-          <div style={{ gridColumn: '1 / -1' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--primary-dark)' }}>Government ID (For Security)</label>
-            <input type="text" name="governmentId" value={formData.governmentId} onChange={handleChange} placeholder="Enter ID number" style={{ padding: '12px', fontSize: '1.05rem', background: 'white' }} />
+          {}
+          <div style={{ gridColumn: '1 / 2' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--primary-dark)' }}>ID Type</label>
+            <select name="governmentIdType" value={formData.governmentIdType} onChange={handleChange} required style={{ padding: '12px', fontSize: '1.05rem', borderRadius: '8px', border: '1px solid var(--border-color)', width: '100%', outline: 'none', background: 'white' }}>
+              <option value="Aadhar Card">Aadhar Card</option>
+              <option value="PAN Card">PAN Card</option>
+              <option value="Voter ID">Voter ID</option>
+              <option value="Driving License">Driving License</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div style={{ gridColumn: '2 / 3' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--primary-dark)' }}>ID Number</label>
+            <input type="text" name="governmentId" value={formData.governmentId} onChange={handleChange} required placeholder="Enter ID number" style={{ padding: '12px', fontSize: '1.05rem', background: 'white' }} />
           </div>
           <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'white', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
             <input type="checkbox" name="isGovtOfficer" checked={formData.isGovtOfficer} onChange={handleChange} style={{ width: '20px', height: '20px', cursor: 'pointer' }} />
@@ -143,12 +154,12 @@ const Register = () => {
             <UserPlus size={20} /> Create Account
           </button>
         </form>
-        
+
         <p style={{ textAlign: 'center', marginTop: '2.5rem', color: 'var(--text-muted)', fontSize: '1.05rem' }}>
           Already have an account? <Link to="/login" style={{ color: 'var(--primary)', fontWeight: 'bold', textDecoration: 'none' }}>Login here</Link>
         </p>
       </div>
-      
+
     </div>
   );
 };

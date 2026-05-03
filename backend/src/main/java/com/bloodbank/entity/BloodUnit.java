@@ -12,11 +12,11 @@ public class BloodUnit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bloodGroup; // A+, O-, etc.
-    private String bloodComponentType; // whole blood, rbc, platelets, plasma, super red
-    private Integer units; // usually 1 per bag, but keeping it for flexibility
+    private String bloodGroup;
+    private String bloodComponentType;
+    private Integer units;
     private LocalDate collectionDate;
     private LocalDate expiryDate;
-    
-    private String status; // AVAILABLE, USED, EXPIRED
+
+    private String status;
 }
