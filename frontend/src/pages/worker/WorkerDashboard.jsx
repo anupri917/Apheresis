@@ -50,11 +50,12 @@ const WorkerDashboard = () => {
 
   const cleanupExpired = async () => {
     try {
-      await api.post('/inventory/cleanup', {});
-      fetchInventory();
-      alert('Cleanup completed!');
+      const res = await api.post('/inventory/cleanup', {});
+      await fetchInventory();
+      alert(res.data || 'Cleanup completed!');
     } catch (e) {
       console.error(e);
+      alert('Cleanup failed: ' + (e.response?.data || e.message));
     }
   };
 

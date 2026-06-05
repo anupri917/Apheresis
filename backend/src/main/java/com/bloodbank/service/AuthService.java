@@ -100,6 +100,10 @@ public class AuthService {
             throw new RuntimeException("Username already exists");
         }
 
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("An account with this email already exists");
+        }
+
         if ("ROLE_ADMIN".equals(user.getRole())) {
             if (userRepository.countByRole("ROLE_ADMIN") >= 10) {
                 throw new RuntimeException("Registration failed: Maximum number of Admin accounts (10) has been reached.");
@@ -108,8 +112,12 @@ public class AuthService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        if (user.getGovernmentId() != null) {
-            user.setGovernmentId(encryptionUtil.encrypt(user.getGovernmentId()));
+        if (user.getGovernmentId() != null && !user.getGovernmentId().isBlank()) {
+            String encryptedGovId = encryptionUtil.encrypt(user.getGovernmentId());
+            if (userRepository.findByGovernmentId(encryptedGovId).isPresent()) {
+                throw new RuntimeException("This Government ID is already registered with another account");
+            }
+            user.setGovernmentId(encryptedGovId);
         }
 
         return userRepository.save(user);

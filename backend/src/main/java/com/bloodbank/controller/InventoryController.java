@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -59,12 +60,13 @@ public class InventoryController {
     public ResponseEntity<?> cleanupExpired() {
         LocalDate today = LocalDate.now();
         List<BloodUnit> units = bloodUnitRepository.findAll();
+        List<BloodUnit> toDelete = new ArrayList<>();
         for (BloodUnit unit : units) {
-            if (unit.getExpiryDate() != null && unit.getExpiryDate().isBefore(today) && "AVAILABLE".equals(unit.getStatus())) {
-                unit.setStatus("EXPIRED");
-                bloodUnitRepository.save(unit);
+            if (unit.getExpiryDate() != null && unit.getExpiryDate().isBefore(today)) {
+                toDelete.add(unit);
             }
         }
-        return ResponseEntity.ok("Cleanup complete");
+        bloodUnitRepository.deleteAll(toDelete);
+        return ResponseEntity.ok("Cleanup complete. " + toDelete.size() + " expired unit(s) removed.");
     }
 }
