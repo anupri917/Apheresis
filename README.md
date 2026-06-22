@@ -133,3 +133,8 @@ CREATE DATABASE blood_bank_db;
     npm start
     ```
     The application will automatically launch on `http://localhost:3000`.
+
+---
+## 🏆 Built For
+
+Apheresis is built for streamlining blood donation,request management,and blood inventory tracking through a secure and intelligent platform.
